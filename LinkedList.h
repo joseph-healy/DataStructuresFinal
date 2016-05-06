@@ -16,7 +16,7 @@ private:
 	struct Node
 	{
 		R       mData;
-		Node<R> *mNext
+		Node<R> *mNext;
 
 		/*      Pre:  None
 		*     Post:  This object is initialized using default values
@@ -46,7 +46,7 @@ private:
 		Node(R data, Node<R>* next)
 		{
 			mData = data;
-			mNext = next
+			mNext = next;
 		}
 	};
 

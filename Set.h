@@ -55,12 +55,11 @@ private:
 	Node<T>* root;
 	int size;
 
-	void insert(Node<T>* node, T data);
-	void destroySubtree(Node<T>* node);
-	bool search(Node<T>* tree, T value);
-	T get(Node<T>* tree, T value);
-	int countNodes(Node<T>* tree);
-	void gatherNodes(T* arr, int &i, Node<T>* node);
+	void insert(Node<T>* &node, T data);
+	void destroySubtree(Node<T>* &node);
+	bool search(Node<T>* &tree, T value);
+	T get(Node<T>* &tree, T value);
+	void gatherNodes(T* arr, int &i, Node<T>* &node);
 
 public:
 	Set();
@@ -98,7 +97,7 @@ Set<T>::~Set()
 *  Purpose:  To delete a subtree/subset
 *************************************************************************/
 template<typename T>
-Set<T>::destroySubtree(Node<T>* node)
+void Set<T>::destroySubtree(Node<T>* &node)
 {
 	if (node == NULL)
 		return;
@@ -108,6 +107,7 @@ Set<T>::destroySubtree(Node<T>* node)
 
 	delete node;
 }
+
 /*      Pre:  An initialized set object
 *     Post:  data is inserted into the tree, no duplicates are allowed. Wrapper for another recursive function call
 *  Purpose:  To insert a value into the set
@@ -116,7 +116,6 @@ template<typename T>
 void Set<T>::insert(T data)
 {
 	insert(root, data);
-	size++;
 }
 
 /*      Pre:  An initialized set object
@@ -124,11 +123,13 @@ void Set<T>::insert(T data)
 *  Purpose:  To insert a value into the set recursively
 *************************************************************************/
 template<typename T>
-void Set<T>::insert(Node<T>* node, T data)
+void Set<T>::insert(Node<T>* &node, T data)
 {
-	if (tree == NULL)
+	if (node == NULL)
 	{
-		tree = new Node<T>(data);
+		node = new Node<T>(data);
+		this->size++;
+		cout << "size incremented - " << this->size << endl;
 		return;
 	}
 
@@ -170,7 +171,7 @@ bool Set<T>::contains(T value)
 *  Purpose:  to find out if the set has a particular value inside of it
 *************************************************************************/
 template<typename T>
-bool Set<T>::search(Node<T>* tree, T value)
+bool Set<T>::search(Node<T>* &tree, T value)
 {
 	if (tree == NULL)
 		return false;
@@ -197,7 +198,7 @@ T Set<T>::get(T value)
 *  Purpose:  to return a value from the set
 *************************************************************************/
 template<typename T>
-T Set<T>::get(Node<T>* tree, T value)
+T Set<T>::get(Node<T>* &tree, T value)
 {
 	if (tree == NULL)
 		return NULL;
@@ -216,22 +217,7 @@ T Set<T>::get(Node<T>* tree, T value)
 template<typename T>
 int Set<T>::nodeCount()
 {
-	return countNodes(root);
-}
-
-/*     Pre:  An initialized set object
-*     Post:  the return value is the number of nodes in the passed in subtree, is a recursive function
-*  Purpose:  to know the size of a set
-*************************************************************************/
-template<typename T>
-int Set<T>::countNodes(Node<T>* tree)
-{
-	if (tree == NULL)
-		return 0;
-	else if (tree->mLeft == NULL && tree->mRight == NULL)
-		return 1;
-	else
-		return 1 + countNodes(tree->mLeft) + countNodes(tree->mRight);
+	return size;
 }
 
 /*     Pre:  An initialized set object
@@ -253,7 +239,7 @@ T* Set<T>::getNodes()
 *  Purpose:  recursive function to collect the nodes of a set for easier iteration. 
 *************************************************************************/
 template<typename T>
-void Set<T>::gatherNodes(T* arr, int &i, Node<T>* node)
+void Set<T>::gatherNodes(T* arr, int &i, Node<T>* &node)
 {
 	if (node != NULL)
 	{

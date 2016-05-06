@@ -9,7 +9,7 @@
 //pair struct, 
 //to be used to pair a vertex with a distance/weight in an adjancency list
 template<typename T, typename R>
-struct pair
+struct MyPair
 {
 	T x;
 	R y;
@@ -18,7 +18,7 @@ struct pair
 struct Vertex
 {
 	int data;
-	LinkedList<pair<Vertex*, int>> adjacencyList;
+	LinkedList<MyPair<Vertex*, int>> adjacencyList;
 };
 
 struct Edge
@@ -40,7 +40,7 @@ private:
 public: 
 	Graph();
 	Graph(Edge edges[], int n);
-	
+	void Dijkstra();
 };
 
 #endif
