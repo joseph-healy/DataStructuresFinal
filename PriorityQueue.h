@@ -87,9 +87,9 @@ void PriorityQueue::heapify()
 			int j = 2 * k;
 			if (j < size) //two kiddos
 			{
-				if (heap[j]->data > heap[j + 1]->data)
+				if (heap[j]->distance > heap[j + 1]->distance)
 					j++;
-				if (v->data <= heap[j]->data)
+				if (v->distance <= heap[j]->distance)
 					isHeap = true;
 				else
 				{
