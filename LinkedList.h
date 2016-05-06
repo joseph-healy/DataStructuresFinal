@@ -60,6 +60,8 @@ public:
 	void addItem(T val);
 	void removeItem();
 	bool isEmpty();
+	int size();
+	void getNodes(T nodeArr[], int n);
 };
 
 /*     Pre:  None
@@ -151,5 +153,46 @@ bool LinkedList<T>::isEmpty()
 		return true;
 	return false;
 }
+
+/*     Pre:  an initialized linked list
+*     Post:  returns the number of nodes in the list
+*  Purpose:  To find the size of the array
+*************************************************************************/
+template<typename T>
+int LinkedList<T>::size()
+{
+	int ct = 0;
+	current = head;
+	while (current->mNext != NULL)
+	{
+		ct++;
+		current = current->mNext;
+	}
+
+	return ct;
+}
+
+/*     Pre:  an initialized linked list, an empty array of T values, and the size of that array, size must not exceed the size of the linked list
+*     Post:   fills the provided array with the values in the nodes
+*  Purpose:  To gather all the values stored inside of the nodes for easy iteration
+*************************************************************************/
+template<typename T>
+void LinkedList<T>::getNodes(T nodeArr[], int n)
+{
+	current = head;
+	for (int i = 0; i < n; i++)
+	{
+		if (current != NULL)
+		{
+			nodeArr[i] = current->mData;
+			current = current->mNext;
+		}
+		else
+		{
+			return;
+		}
+	}
+}
+
 
 #endif
