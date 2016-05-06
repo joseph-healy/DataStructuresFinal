@@ -57,12 +57,14 @@ private:
 
 	void insert(Node<T>* node, T data);
 	void destroySubtree(Node<T>* node);
+	bool search(Node<T>* tree, T value);
 	T get(Node<T>* tree, T value);
 public:
 	Set();
 	~Set();
 	void insert(T data);
 	bool isEmpty();
+	bool contains(T value);
 	T get(T value);
 };
 
@@ -144,6 +146,33 @@ bool Set<T>::isEmpty()
 		return true;
 	else
 		return false;
+}
+
+/*     Pre:  An initialized set object
+*     Post:  Returns true if the value is found, otherwise false. wrapper for a recursive function
+*  Purpose:  to find out if the set has a particular value inside of it
+*************************************************************************/
+template<typename T>
+bool Set<T>::contains(T value)
+{
+	return search(root, value);
+}
+
+/*     Pre:  An initialized set object
+*     Post:  Returns true if the value is found, otherwise false
+*  Purpose:  to find out if the set has a particular value inside of it
+*************************************************************************/
+template<typename T>
+bool Set<T>::search(Node<T>* tree, T value)
+{
+	if (tree == NULL)
+		return false;
+	if (tree->mData == value)
+		return true
+	if (tree->mData > value)
+		return search(tree->mLeft, value);
+
+	return search(tree->mRight, value);
 }
 
 /*      Pre:  An initialized set object

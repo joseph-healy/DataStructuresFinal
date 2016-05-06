@@ -15,30 +15,31 @@ struct pair
 	R y;
 };
 
+struct Vertex
+{
+	int data;
+	LinkedList<pair<Vertex*, int>> adjacencyList;
+};
+
+struct Edge
+{
+	Vertex* v1;
+	Vertex* v2;
+	int weight;
+};
+
 class Graph
 {
 
 private:
-	struct Vertex
-	{
-		int data;
-		LinkedList<pair<Vertex*, int>> adjacencyList;
-
-	};
-	struct Edge
-	{
-		Vertex v1, v2;
-	};
-
+	
 	Set<Vertex*> verticies;
 	Set<Edge*> edges;
 	Vertex* source;
 
 public: 
-
 	Graph();
-	Graph(int v, int e);
-	Graph(int v[]);
+	Graph(Edge edges[], int n);
 	
 };
 
