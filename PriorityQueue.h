@@ -14,14 +14,14 @@ Implemented to be used with Vertex objects in the graph class
 class PriorityQueue
 {
 private:
-	const int DEFAULT_SIZE = 5;
-	int size;
+	const int DEFAULT_SIZE = 10;
+	int size; //values filled in array
+	int realSize; // actual size of array to be used in resizing
 	Vertex** heap; // dynapic array of verticies
 
 	void heapify();
 public:
 	PriorityQueue();
-	PriorityQueue(int size);
 	PriorityQueue(Vertex* verticies[], int size);
 	void removeMin();
 	void insert(Vertex* val);
@@ -34,25 +34,12 @@ public:
 *************************************************************************/
 PriorityQueue::PriorityQueue()
 {
-	this->size = DEFAULT_SIZE;
-	this->heap = new Vertex*[size];
+	this->size = 0;
+	this->heap = new Vertex*[DEFAULT_SIZE];
+	this->realSize = DEFAULT_SIZE;
 
-	for (int i = 0; i < size; i++)
-		heap[i] = NULL;
+	heap[0] = NULL;
 
-}
-
-/*     Pre:  A valid size
-*     Post:  This object is initialized using the passed in size.
-*  Purpose:  To intialize a Priority Queue object
-*************************************************************************/
-PriorityQueue::PriorityQueue(int size)
-{
-	this->size = size + 1; // to accomadate for the null value at the beggining
-	this->heap - new Vertex*[this->size];
-
-	for (int i = 0; i < size; i++)
-		heap[i] = NULL;
 }
 
 /*     Pre:  An array of pointers to vertex objects A valid size
@@ -62,7 +49,18 @@ PriorityQueue::PriorityQueue(int size)
 PriorityQueue::PriorityQueue(Vertex* verticies[], int size)
 {
 	this->size = size + 1; // to accomadate for the null value at the beggining
-	this->heap = new Vertex*[this->size];
+
+	if (size > DEFAULT_SIZE)
+	{
+		this->heap = new Vertex*[this->size];
+		realSize = this->size;
+	}
+	else
+	{
+		this->heap = new Vertex*[DEFAULT_SIZE];
+		realSize = DEFAULT_SIZE;
+	}
+
 	heap[0] = NULL;
 	for (int i = 0; i < size; i++)
 	{
@@ -121,16 +119,23 @@ void PriorityQueue::removeMin()
 *************************************************************************/
 void PriorityQueue::insert(Vertex* val)
 {
-	Vertex** temp = new Vertex*[this->size + 1];
-	temp[0] = NULL;
-	for (int i = 1; i < this->size; i++)
+	this->size++;
+	if (this->size > realSize)
 	{
-		temp[i] = heap[i];
+		Vertex** temp = new Vertex*[realSize*2];
+		temp[0] = NULL;
+		for (int i = 1; i < this->size; i++)
+		{
+			temp[i] = heap[i];
+		}
+		temp[this->size] = val;
+		heap = temp;
+	}
+	else
+	{
+		heap[this->size] = val;
 	}
 
-	this->size++;
-	temp[this->size] = val;
-	heap = temp;
 	heapify();
 }
 
