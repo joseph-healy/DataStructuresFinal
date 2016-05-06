@@ -2,10 +2,10 @@
 #ifndef __PRIORITY_QUEUE_
 #define __PRIORITY_QUEUE_
 
-#include "Graph.h"
 
 using namespace std;
 
+#include "HelperStructs.h"
 
 /*Priority Queue class
 Implemeneted by using a min heap
