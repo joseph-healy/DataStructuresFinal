@@ -36,5 +36,11 @@ Graph::Graph(Edge edges[], int n)
 
 void Graph::Dijkstra()
 {
+	Vertex** vertexArr = verticies.getNodes();
+	PriorityQueue queue;
 
+	for (int i = 0; i < verticies.nodeCount(); i++)
+	{
+		vertexArr[i]->distance = INT_MAX;
+	}
 }

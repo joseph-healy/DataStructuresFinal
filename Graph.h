@@ -5,6 +5,7 @@
 #include <iostream>
 #include "Set.h"
 #include "LinkedList.h"
+#include "PriorityQueue.h"
 
 //pair struct, 
 //to be used to pair a vertex with a distance/weight in an adjancency list
@@ -18,6 +19,7 @@ struct MyPair
 struct Vertex
 {
 	int data;
+	int distance;
 	LinkedList<MyPair<Vertex*, int>> adjacencyList;
 };
 
