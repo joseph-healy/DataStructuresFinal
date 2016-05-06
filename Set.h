@@ -53,12 +53,15 @@ private:
 		}
 	};
 	Node<T>* root;
-
+	int size;
 
 	void insert(Node<T>* node, T data);
 	void destroySubtree(Node<T>* node);
 	bool search(Node<T>* tree, T value);
 	T get(Node<T>* tree, T value);
+	int countNodes(Node<T>* tree);
+	void gatherNodes(T* arr, int &i, Node<T>* node);
+
 public:
 	Set();
 	~Set();
@@ -66,6 +69,8 @@ public:
 	bool isEmpty();
 	bool contains(T value);
 	T get(T value);
+	int nodeCount();
+	T* getNodes();
 };
 
 /*      Pre:  None
@@ -76,6 +81,7 @@ template<typename T>
 Set<T>::Set()
 {
 	root = NULL;
+	size = 0;
 }
 
 /*      Pre:  None
@@ -110,6 +116,7 @@ template<typename T>
 void Set<T>::insert(T data)
 {
 	insert(root, data);
+	size++;
 }
 
 /*      Pre:  An initialized set object
@@ -168,7 +175,7 @@ bool Set<T>::search(Node<T>* tree, T value)
 	if (tree == NULL)
 		return false;
 	if (tree->mData == value)
-		return true
+		return true;
 	if (tree->mData > value)
 		return search(tree->mLeft, value);
 
@@ -182,7 +189,7 @@ bool Set<T>::search(Node<T>* tree, T value)
 template<typename T>
 T Set<T>::get(T value)
 {
-	return get(root, value)
+	return get(root, value);
 }
 
 /*      Pre:  An initialized set object
@@ -201,4 +208,60 @@ T Set<T>::get(Node<T>* tree, T value)
 
 	return get(tree->mRight, value);
 }
+
+/*     Pre:  An initialized set object
+*     Post:  the return value is the number of nodes in the set, this is a wrapper function for a recursive function
+*  Purpose:  to know the size of a set
+*************************************************************************/
+template<typename T>
+int Set<T>::nodeCount()
+{
+	return countNodes(root);
+}
+
+/*     Pre:  An initialized set object
+*     Post:  the return value is the number of nodes in the passed in subtree, is a recursive function
+*  Purpose:  to know the size of a set
+*************************************************************************/
+template<typename T>
+int Set<T>::countNodes(Node<T>* tree)
+{
+	if (tree == NULL)
+		return 0;
+	else if (tree->mLeft == NULL && tree->mRight == NULL)
+		return 1;
+	else
+		return 1 + countNodes(tree->mLeft) + countNodes(tree->mRight);
+}
+
+/*     Pre:  An initialized set object
+*     Post:  Returns an array filled with the values from the nodes
+*  Purpose:  to collect the nodes of a set for easier iteration. wrapper for a recursive function
+*************************************************************************/
+template<typename T>
+T* Set<T>::getNodes()
+{
+	T* arr = new T[nodeCount()];
+	int i = 0;
+	gatherNodes(arr, i, root);
+
+	return arr;
+}
+
+/*     Pre:  An initialized set object
+*     Post:  fills an array with the values from the nodes in pre order
+*  Purpose:  recursive function to collect the nodes of a set for easier iteration. 
+*************************************************************************/
+template<typename T>
+void Set<T>::gatherNodes(T* arr, int &i, Node<T>* node)
+{
+	if (node != NULL)
+	{
+		gatherNodes(arr, i, node->mLeft);
+		arr[i] = node->mData;
+		i++;
+		gatherNodes(arr, i, node->mRight);
+	}
+}
+
 #endif
