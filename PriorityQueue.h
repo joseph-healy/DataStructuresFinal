@@ -25,6 +25,7 @@ public:
 	PriorityQueue(Vertex* verticies[], int size);
 	void removeMin();
 	void insert(Vertex* val);
+	Vertex* getMin();
 	~PriorityQueue();
 };
 
@@ -137,6 +138,11 @@ void PriorityQueue::insert(Vertex* val)
 	}
 
 	heapify();
+}
+
+Vertex* PriorityQueue::getMin()
+{
+	return heap[1];
 }
 
 PriorityQueue::~PriorityQueue()

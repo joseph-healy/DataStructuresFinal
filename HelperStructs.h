@@ -17,6 +17,7 @@ struct Vertex
 {
 	int data;
 	int distance;
+	Vertex* previous;
 	LinkedList<MyPair<Vertex*, int>> adjacencyList;
 };
 

@@ -36,11 +36,28 @@ Graph::Graph(Edge edges[], int n)
 
 void Graph::Dijkstra()
 {
-	Vertex** vertexArr = verticies.getNodes();
+	
 	PriorityQueue queue;
-
+	Vertex** vertexArr = verticies.getNodes();
 	for (int i = 0; i < verticies.nodeCount(); i++)
 	{
-		vertexArr[i]->distance = INT_MAX;
+		if (vertexArr[i] != source)
+		{
+			vertexArr[i]->distance = INT_MAX;
+			vertexArr[i]->previous = NULL;
+			queue.insert(vertexArr[i]);
+		}
 	}
+	source->distance = 0;
+	
+	for (int i = 0; i < verticies.nodeCount; i++)
+	{
+		Vertex* u = queue.getMin();
+
+	}
+	
+	
+
+
+
 }
