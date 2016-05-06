@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _BST_H
-#define _BST_H
+#ifndef _SET_H
+#define _SET_H
 
 #include <iostream>
 
